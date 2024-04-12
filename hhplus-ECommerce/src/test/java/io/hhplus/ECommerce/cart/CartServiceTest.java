@@ -79,7 +79,7 @@ public class CartServiceTest {
 	@Test
 	@DisplayName("장바구니에 상품 추가")
 	void addProductToCartTest() {
-	    // given
+	    
 	    Long userId = 1L;
 	    List<Long> productIds = Arrays.asList(3L, 4L);
 	    Cart cartItem1 = new Cart(1L, 1L, userId, 3, "N"); // 상품1
@@ -90,10 +90,10 @@ public class CartServiceTest {
 	    List<Cart> cartItems = Arrays.asList(cartItem1, cartItem2, cartItem3, cartItem4);
 	    when(cartRepository.findByUserId(userId)).thenReturn(cartItems);
 
-	    // when
+	    
 	    List<CartResponse> result = cartService.addProductToCart(userId, productIds);
 
-	    // then
+	   
 	    assertEquals(4, result.size()); // 상품이 추가됐는지 확인
 	    // 추가된 상품 정보 확인
 	    for (Long productId : productIds) {
@@ -110,7 +110,7 @@ public class CartServiceTest {
 	@Test
 	@DisplayName("장바구니에 상품 삭제")
 	void cartDelTest() {
-	    // given
+	    
 	    Long userId = 1L;
 	    List<Long> productIds = Arrays.asList(4L, 5L); // 삭제할 상품 ID 리스트
 	    Cart cartItem1 = new Cart(1L, 1L, userId, 3, "N"); // 상품1
@@ -119,10 +119,10 @@ public class CartServiceTest {
 	    List<Cart> cartItems = Arrays.asList(cartItem1, cartItem2, cartItem3);
 	    when(cartRepository.findByUserId(userId)).thenReturn(cartItems);
 
-	    // when
+	   
 	    List<CartResponse> result = cartService.delProductToCart(userId, productIds);
 
-	    // then
+	    
 	    assertEquals(3, result.size()); // 상품이 삭제됐는지 확인
 	    for (Long productId : productIds) {
 	        // 삭제된 상품 정보 확인

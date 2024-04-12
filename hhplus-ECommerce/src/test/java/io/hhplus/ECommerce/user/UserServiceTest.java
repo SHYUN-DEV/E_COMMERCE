@@ -53,7 +53,7 @@ public class UserServiceTest {
 	@DisplayName("포인트 충전")
 	@Test
 	void testPointCharge() {
-	    // given
+	    
 	    Long userId = 1L;
 	    int initialPoint = 10000; //초기 포인트
 	    int chargeAmount = 5000; // 충전할 금액
@@ -62,10 +62,10 @@ public class UserServiceTest {
 	    User user = new User(userId, "사용자1", initialPoint);
 	    when(userRepository.findById(userId)).thenReturn(user);
 
-	    // when
+	   
 	    UserResponse result = userService.chargePoint(userId, chargeAmount);
 
-	    // then
+	   
 	    int expectedPoint = initialPoint + chargeAmount; // 예상 포인트 잔액
 	    assertEquals(expectedPoint, result.getPoint());
 	    assertEquals(userId, result.getUserId());
@@ -74,7 +74,7 @@ public class UserServiceTest {
 	  @DisplayName("포인트 조회")
 	    @Test
 	    void testPointInquiry() {
-	        // given
+	       
 	        Long userId = 1L;
 	        int expectedPoint = 10000; // 예상 포인트 잔액
 
@@ -82,10 +82,10 @@ public class UserServiceTest {
 	        User user = new User(userId, "사용자1", expectedPoint);
 	        when(userRepository.findById(userId)).thenReturn(user);
 
-	        // when
+	        
 	        int result = userService.getUserPoint(userId).getPoint();
 
-	        // then
+	        
 	        assertEquals(expectedPoint, result);
 	    }
 
