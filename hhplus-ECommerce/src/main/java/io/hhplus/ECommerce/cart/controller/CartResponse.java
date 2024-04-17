@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CartResponse {
 	
-	//@Schema(description= "카드 아이디", example="00001")
+	
 	private Long cartId;
 	
 	private Long productId;

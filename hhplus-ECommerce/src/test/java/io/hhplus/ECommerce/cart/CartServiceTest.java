@@ -42,8 +42,7 @@ public class CartServiceTest {
 	@Test
 	@DisplayName("유저 아이디로 장바구니 정보 가져오기")
 	void getCartInfoByUserIdTest() {
-	    // 테스트에 필요한 Mock 데이터 설정
-		
+	    
 		 
 	    Long userId = 1L;
 	    Cart cartItem1 = new Cart(1L, 1L, userId, 2, "N"); // 상품1
