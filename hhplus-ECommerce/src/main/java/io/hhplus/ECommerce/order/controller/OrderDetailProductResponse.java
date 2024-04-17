@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderProductResponse {
+public class OrderDetailProductResponse {
 	
 	
 	private Long orderId;

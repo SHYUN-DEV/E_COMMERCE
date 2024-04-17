@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import io.hhplus.ECommerce.cart.domain.CartRepository;
 import io.hhplus.ECommerce.order.controller.OrderDetailResponse;
-import io.hhplus.ECommerce.order.controller.OrderProductResponse;
+import io.hhplus.ECommerce.order.controller.OrderDetailProductResponse;
 import io.hhplus.ECommerce.order.controller.OrderRequest;
 import io.hhplus.ECommerce.order.controller.OrderResponse;
 import io.hhplus.ECommerce.product.domain.ProductRepository;
@@ -43,11 +43,11 @@ public class OrderServiceImpl implements OrderService {
 	public OrderResponse processPayment(Long userId, Long orderId) {
 		
 		//주문 상품 정보 조회(주문, 주문상세, 상품 테이블 조인)
-		List<OrderProductResponse> orderProductResponse = productRepository.orderProductInfo();
+		List<OrderDetailProductResponse> orderProductResponse = productRepository.orderProductInfo();
 				
 				
 		//상품 재고 차감(위 코드에서 가져온  productIdQuantity(상품아이디와구매수량)로 상품들 재고 차감)
-		for (OrderProductResponse productIdQuantity : orderProductResponse) {
+		for (OrderDetailProductResponse productIdQuantity : orderProductResponse) {
 			Long productId = productIdQuantity.getProductId();
 			int quantity = productIdQuantity.getQuantity();
 			// 상품 재고 차감 업데이트 
