@@ -50,39 +50,8 @@ public class OrderController {
 		
 		 OrderResponse orderResponse = orderService.processPayment(userId, orderId);
 		
-	
-//		//주문 상품 정보 조회(주문, 주문상세, 상품 테이블 조인)
-//		List<OrderProductResponse> orderProductResponse = productService.orderProductInfo();
-//		
-//		
-//		
-//		//상품 재고 차감(위 코드에서 가져온  productIdQuantity(상품아이디와구매수량)로 상품들 재고 차감)
-//		
-//		
-//		for (OrderDetailResponse orderDetailResponse : orderProductResponse) {
-//		    Long productId = orderDetailResponse.getProductId();
-//		    int quantity = orderDetailResponse.getQuantity();
-//		    // 상품 재고 차감 업데이트 
-//		    productService.deductQuantity(productId, quantity);
-//		}
-//		
-//		//현재 유저 포인트 조회 
-//		UserResponse userResponse= userService.pointInquiry(userId);
-//		
-//		//포인트 차감 업데이트//
-//		int orderPrice = orderProductResponse.get(0).getTotOrderPrice();
-//		userService.deductPoint(userId, orderPrice);
-//		
-//		
-//		//주문상세/주문에 결제상태 결제날짜	업데이트    
-//		orderService.updateOrderDateStatus;
-//		
-//		//최신화 된 주문테이블 정보 가져오기
-//		OrderResponse orderResponse = orderService.orderInfo(userId, orderId);
-	
-		
-		
-		
+
+			
 		//오더 테이블 반환 	 오더테이블  가져오기
 		return ResponseEntity.ok().body(orderResponse); 
 			
