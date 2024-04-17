@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
+import io.hhplus.ECommerce.user.controller.UserResponse;
 import io.hhplus.ECommerce.user.domain.User;
 import io.hhplus.ECommerce.user.domain.UserRepository;
 
@@ -14,6 +15,21 @@ public class UserRepositoryImpl implements UserRepository {
 	public User findById(Long userId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	
+	
+	
+	@Override
+	public UserResponse pointInquiry(Long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void deductPoint(Long userId, int orderPrice) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

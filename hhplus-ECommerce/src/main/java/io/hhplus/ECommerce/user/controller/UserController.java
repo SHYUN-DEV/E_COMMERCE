@@ -21,22 +21,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/api")
 public class UserController {
 	
-//	private final UserService userService;
-//	 
-//	 
-//	@Autowired
-//	public UserController(UserService userService) {
-//		this.userService = userService;
-//	}
+	private final UserService userService;
+	 
+	 
+	@Autowired
+	public UserController(UserService userService) {
+		this.userService = userService;
+	}
 	 
 	 
 	 
 	@Operation(summary = "포인트 충전", description = "유저의 포인트를 충전합니다.")
 	@PostMapping("/point/charge/{userId}")
 	public  ResponseEntity<UserResponse> pointCharge(@PathVariable("userId") Long userId,
-								  @RequestBody int point) {
+													 @RequestBody int point) {
 		
-		UserResponse userResponse = new UserResponse();
+		UserResponse userResponse = userService.chargePoint(userId, point);
 		
 		return ResponseEntity.ok().body(userResponse); 
 	}
@@ -47,7 +47,7 @@ public class UserController {
 	public ResponseEntity<UserResponse> pointInquiry(@PathVariable("userId") Long userId) {
 		
 		
-		UserResponse userResponse = new UserResponse();
+		UserResponse userResponse = userService.getUserPoint(userId);
 		
 		return ResponseEntity.ok().body(userResponse); 
 	}
