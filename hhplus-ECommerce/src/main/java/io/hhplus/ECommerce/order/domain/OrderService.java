@@ -12,4 +12,8 @@ public interface OrderService {
 
 	OrderResponse orderAndPay(Long userId, List<OrderRequest> orderItems);
 
+	
+	// 주문/결제
+	OrderResponse processPayment(Long userId, Long orderId);
+
 }
