@@ -29,15 +29,12 @@ public class OrderController {
 	
 	private final OrderService orderService;
 	
-	private final ProductService productService;
-	 
-	private final UserService userService;
+
 	 
 	@Autowired
-	public OrderController(OrderService orderService, ProductService productService, UserService userService) {
+	public OrderController(OrderService orderService) {
 		this.orderService = orderService;
-		this.productService = productService;
-		this.userService = userService;
+		
 	}
 	 
 

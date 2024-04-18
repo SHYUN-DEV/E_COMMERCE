@@ -32,4 +32,11 @@ public class ProductRepositoryImpl implements ProductRepository{
 		
 	}
 
+	//상위판매상품 조회
+	@Override
+	public List<OrderDetailProductResponse> getBestProducts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

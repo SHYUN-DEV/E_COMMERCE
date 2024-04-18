@@ -9,23 +9,22 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
-    // 예외 처리 메서드 작성
+  
     @ExceptionHandler(InsufficientInventoryException.class)
     public ResponseEntity<Object> handleInsufficientInventoryException(InsufficientInventoryException ex) {
-        // 상품 재고 부족 예외 처리 로직 작성
+        // 상품 재고 부족 예외 처리 
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler(NotEnoughPointException.class)
     public ResponseEntity<Object> handleNotEnoughPointException(NotEnoughPointException ex) {
-        // 포인트 부족 예외 처리 로직 작성
+        // 포인트 부족 예외 처리 
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     
-    
-    // ErrorResponse 클래스는 예외 처리 결과를 담는 클래스로, 상태 코드, 메시지 등을 포함할 수 있습니다.
+
     public class ErrorResponse {
         private HttpStatus status;
     

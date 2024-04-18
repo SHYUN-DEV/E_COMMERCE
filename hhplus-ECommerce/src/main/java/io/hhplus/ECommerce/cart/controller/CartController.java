@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.hhplus.ECommerce.cart.domain.CartService;
 import io.hhplus.ECommerce.product.controller.ProductResponse;
-import io.hhplus.ECommerce.product.domain.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,8 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class CartController {
 	
 	private final CartService cartService;
-	
-	//private final ProductService productService;
+
 	 
 	 
 	@Autowired

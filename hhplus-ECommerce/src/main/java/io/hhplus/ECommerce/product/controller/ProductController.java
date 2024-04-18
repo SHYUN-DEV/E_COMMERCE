@@ -1,13 +1,11 @@
 package io.hhplus.ECommerce.product.controller;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,12 +37,8 @@ public class ProductController {
 	@GetMapping("/product/inquiry/{productId}")
 	public ResponseEntity<List<ProductResponse>> productInquiry(@RequestParam("productIds") List<Long> productIds) {
 		
-		List<ProductResponse> productInfo = new ArrayList<>();
 		
-		for(Long productId : productIds) {
-			ProductResponse productResponse = productService.getProductInfo(productId);
-			productInfo.add(productResponse);
-		}
+		List<ProductResponse> productInfo = productService.getProductInfo(productIds);
 		
 		
 		return ResponseEntity.ok().body(productInfo); 
@@ -58,9 +52,8 @@ public class ProductController {
 	public ResponseEntity<List<OrderDetailProductResponse>> bestProduct() {
 		
 		
-		ProductResponse productResponse = new ProductResponse();
-		
 		List<OrderDetailProductResponse> bestProductList = productService.getBestProducts();
+		
 		
 		return ResponseEntity.ok().body(bestProductList); 
 	}
