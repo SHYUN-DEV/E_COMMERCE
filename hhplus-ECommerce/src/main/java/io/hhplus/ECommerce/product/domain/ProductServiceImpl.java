@@ -48,29 +48,6 @@ public class ProductServiceImpl implements ProductService {
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Override
-	public ProductResponse getProduct(Long productId1) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public List<ProductResponse> getBestSellingProducts() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	
-
-	
 
 }

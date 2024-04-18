@@ -12,8 +12,12 @@ public interface UserRepository {
 	public UserResponse pointInquiry(Long userId);
 	
 	//유저 포인트 차감
-	public void deductPoint(Long userId, int orderPrice); 
+	public void deductPoint(Long userId, int orderPrice);
 
+	//유저 포인트 충전
+	public UserResponse chargePoint(Long userId, int chargeAmount);
+
+	
 	
 	
 }
