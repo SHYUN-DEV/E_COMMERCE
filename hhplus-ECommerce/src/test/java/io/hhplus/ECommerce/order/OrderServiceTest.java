@@ -2,10 +2,16 @@ package io.hhplus.ECommerce.order;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +24,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import io.hhplus.ECommerce.exception.InsufficientInventoryException;
+import io.hhplus.ECommerce.exception.NotEnoughPointException;
+import io.hhplus.ECommerce.order.controller.OrderDetailProductResponse;
 import io.hhplus.ECommerce.order.controller.OrderDetailResponse;
 import io.hhplus.ECommerce.order.controller.OrderRequest;
 import io.hhplus.ECommerce.order.controller.OrderResponse;
@@ -61,57 +70,104 @@ public class OrderServiceTest {
 	
 	@Test
 	@DisplayName("주문/결제")
-	void testOrderPayWithMultipleProducts() {
-	    
-	    Long userId = 1L;
-	    Long orderId = 1L;
-	    List<OrderRequest> orderItems = Arrays.asList(
-	            new OrderRequest(100L, 2),
-	            new OrderRequest(101L, 1) 
-	    );
-
-	    Product product1 = new Product(100L, "상품1", 5000, 10, 50);
-	    Product product2 = new Product(101L, "상품2", 8000, 5, 30);
-
-	    // 상품 정보 조회 
-	    when(productRepository.findById(100L)).thenReturn(product1);
-	    when(productRepository.findById(101L)).thenReturn(product2);  
-
-	    // 사용자 포인트 조회 
-	    UserResponse userResponse = new UserResponse(userId, "사용자1", 20000); // 사용자 포인트 정보
-	    when(userService.getUserPoint(userId)).thenReturn(userResponse);
-
-	    
-	    // 주문 상세 정보 설정
-	    List<OrderDetailResponse> orderedItems = Arrays.asList(
-	            new OrderDetailResponse(100L, "상품1", 2, 5000),
-	            new OrderDetailResponse(101L, "상품2", 1, 8000)
-	    );
-	 
-	    // 반환되는 주문 정보
-	    OrderResponse orderResponse = new OrderResponse(orderId, userId, 13000, "2024-03-31T15:30:00", "Y", orderedItems);
-	    when(orderService.orderAndPay(userId, orderItems)).thenReturn(orderResponse);
-
-	    
-	    OrderResponse result = orderService.orderAndPay(userId, orderItems);
-
-	   
-	    assertNotNull(result); // 주문 결과가 null이 아닌지 확인
-	    assertEquals(orderId, result.getOrderId()); // 주문 결과의 주문 아이디가 일치하는지 확인
-	    assertEquals(userId, result.getUserId()); // 주문 결과의 사용자 ID가 일치하는지 확인
-	    assertEquals(13000, result.getTotOrderPrice()); // 주문 결과의 총 주문 가격이 일치하는지 확인
-	    assertEquals("2024-03-31T15:30:00", result.getOrderDate()); // 주문 결과의 주문 날짜가 일치하는지 확인
-	    assertEquals("Y", result.getPayStatus()); // 주문 결과의 주문 상태가 일치하는지 확인
-	    
-
-
+	void testProcessPayment_Success() {
+	      
+		Long userId = 1L;
+		Long orderId = 1L;
+	        
+		OrderDetailProductResponse orderDetailProductResponse = new OrderDetailProductResponse();
+		orderDetailProductResponse.setInventory(100); 
+		orderDetailProductResponse.setQuantity(10);
+		orderDetailProductResponse.setTotOrderPrice(50000);;
+		 
+		List<OrderDetailProductResponse> list = new ArrayList<>();
+		list.add(orderDetailProductResponse);
+		//주문,주문상세,상품 정보 조회
+		when(productRepository.orderProductInfo()).thenReturn(list);
+		 
+		UserResponse userResponse = new UserResponse();
+		userResponse.setPoint(20000); 
+		//포인트 조회
+		when(userRepository.pointInquiry(userId)).thenReturn(userResponse);
+		 
 		
-		}
+		OrderResponse expectedOrderResponse = new OrderResponse();
+		expectedOrderResponse.setOrderId(orderId);
+		expectedOrderResponse.setUserId(userId);
+		expectedOrderResponse.setTotOrderPrice(13000); 
+		expectedOrderResponse.setOrderDate("2024-03-31 15:30:00"); 
+		expectedOrderResponse.setPayStatus("Y"); 
+		 	
+		 
+		//결제 후 결과
+		when(orderRepository.orderInfo(userId, orderId)).thenReturn(new OrderResponse());
+		 
+		OrderResponse actualOrderResponse = orderService.processPayment(userId, orderId);     
+		 
+		assertNotNull(actualOrderResponse);
+		assertEquals(orderId, actualOrderResponse.getOrderId());
+		assertEquals(userId, actualOrderResponse.getUserId());
+		assertEquals(13000, actualOrderResponse.getTotOrderPrice());
+		assertEquals("2024-03-31 15:30:00", actualOrderResponse.getOrderDate());
+		assertEquals("Y", actualOrderResponse.getPayStatus());
+		 
+	}	
+	
+		
+	@Test
+	@DisplayName("주문 수량보다 재고가 적은 경우")
+	void testProcessPayment_InsufficientInventoryException() {
+	
+		Long userId = 1L;
+		Long orderId = 1L;
+	    OrderDetailProductResponse orderDetailProductResponse = new OrderDetailProductResponse();
+	    orderDetailProductResponse.setInventory(5); // 수량보다 재고가 적게 설정
+	    orderDetailProductResponse.setQuantity(10); // 주문 수량
+	    
+	    List<OrderDetailProductResponse> list = new ArrayList<>();
+	    list.add(orderDetailProductResponse);
+	    
+	    when(productRepository.orderProductInfo()).thenReturn(list);
 
-	    
-	    
+
+	    assertThrows(InsufficientInventoryException.class, () -> orderService.processPayment(userId, orderId));
+
+	
 	}
 
+
+	 @Test
+	 @DisplayName("포인트가 총 상품 가격보다 적은 경우")
+	 void testProcessPayment_NotEnoughPointException() {
+		
+		 Long userId = 1L;
+		 Long orderId = 1L;
+		
+		 OrderDetailProductResponse orderDetailProductResponse = new OrderDetailProductResponse();
+		 orderDetailProductResponse.setInventory(100); // 재고가 충분한 수량 설정
+		 orderDetailProductResponse.setQuantity(10);
+		 orderDetailProductResponse.setTotOrderPrice(10000);;
+		 
+		
+		 List<OrderDetailProductResponse> list = new ArrayList<>();
+		 list.add(orderDetailProductResponse);
+		 
+		 when(productRepository.orderProductInfo()).thenReturn(list);
+		 
+		 UserResponse userResponse = new UserResponse();
+		 userResponse.setPoint(5000); // 주문 총액보다 적은 포인트 설정
+		 when(userRepository.pointInquiry(userId)).thenReturn(userResponse);
+		 
+		
+		 assertThrows(NotEnoughPointException.class, () -> orderService.processPayment(userId, orderId));
+		 
+		
+		 
+	 }	
+	 
+	
+
+}
 
 
 
