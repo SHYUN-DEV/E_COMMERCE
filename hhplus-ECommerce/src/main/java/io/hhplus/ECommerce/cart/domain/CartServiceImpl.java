@@ -6,11 +6,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.hhplus.ECommerce.cart.controller.CartResponse;
 import io.hhplus.ECommerce.product.controller.ProductResponse;
 import io.hhplus.ECommerce.product.domain.ProductRepository;
-import jakarta.transaction.Transactional;
+
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -27,7 +28,7 @@ public class CartServiceImpl implements CartService {
 	
 	
 	//장바구니 상품 정보 조회
-	@Transactional
+	@Transactional(readOnly = true)
 	@Override
 	public CartResponse cartInfo(Long userId) {
 		

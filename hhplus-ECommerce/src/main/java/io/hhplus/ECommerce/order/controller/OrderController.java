@@ -51,8 +51,7 @@ public class OrderController {
 		 OrderResponse orderResponse = orderService.processPayment(userId, orderId);
 		
 
-			
-		//오더 테이블 반환 	 오더테이블  가져오기
+		
 		return ResponseEntity.ok().body(orderResponse); 
 			
 	}

@@ -28,7 +28,7 @@ public class OrderDetailProductResponse {
 	
 	
 	private int inventory;
-	private int salesNumber;
+	//private int salesNumber;
 	
 	
 	
