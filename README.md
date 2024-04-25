@@ -11,3 +11,10 @@
 4. [api 명세](https://docs.google.com/spreadsheets/d/1nYC0oEB-8Cfezy9FAc1-W9L0ObWs1_SmjASPsBLhk24/edit#gid=294299848)
 
 5. [swagger](https://docs.google.com/spreadsheets/d/1nYC0oEB-8Cfezy9FAc1-W9L0ObWs1_SmjASPsBLhk24/edit#gid=2704616)
+
+6. [브랜치 전략](https://docs.google.com/spreadsheets/d/1nYC0oEB-8Cfezy9FAc1-W9L0ObWs1_SmjASPsBLhk24/edit#gid=333836051)
+
+7. [회고]()
+
+8. [트러블 슈팅]()
+
