@@ -14,7 +14,9 @@
 
 6. [브랜치 전략](https://docs.google.com/spreadsheets/d/1nYC0oEB-8Cfezy9FAc1-W9L0ObWs1_SmjASPsBLhk24/edit#gid=333836051)
 
-7. [회고]()
+7. [동시성 문제](https://docs.google.com/spreadsheets/d/1nYC0oEB-8Cfezy9FAc1-W9L0ObWs1_SmjASPsBLhk24/edit#gid=794267824)
 
-8. [트러블 슈팅]()
+8. [회고]()
+
+9. [트러블 슈팅]()
 
