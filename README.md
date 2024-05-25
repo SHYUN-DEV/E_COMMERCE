@@ -1,4 +1,4 @@
-<a href="https://hhpluscertificateofcompletion.oopy.io/">
+수료인증!!! <a href="https://hhpluscertificateofcompletion.oopy.io/">
   <img src="https://static.spartacodingclub.kr/hanghae99/plus/completion/badge_blue.svg" />
 </a>
 
